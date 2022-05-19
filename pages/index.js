@@ -1,7 +1,6 @@
 import { Contract, providers, utils } from "ethers";
-import { mnemonicToSeed } from "ethers/lib/utils";
 import Head from "next/head";
-import React,{ useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 import { abi, NFT_CONTRACT_ADDRESS } from "../constants";
 import styles from "../styles/Home.module.css";
@@ -27,13 +26,13 @@ export default function Home() {
     try {
       //we need a signer here since this is a 'write' transaction
       const signer = await getProviderOrSigner(true);
-      //create a new instance of the contract with a signer, wich allows update methods
+      //create a new instance of the contract with a signer, which allows update methods
       const whitelistContract =  new Contract(
         NFT_CONTRACT_ADDRESS,
         abi,
         signer
       );
-      //call the prealeMintfrom the contract, only whitelisted addresses would be able to mint
+      //call the presaleMint from the contract, only whitelisted addresses would be able to mint
       const tx = await whitelistContract.presaleMint({
         //value signifies the cost of one crypto dev which is "0.01" eth, we are parsing '0.01' string to ether using the utils library from ethers.js
         value: utils.parseEther("0.01"),
@@ -53,7 +52,7 @@ export default function Home() {
     try {
       //we need a signer here since this is a 'write' transaction
       const signer = await getProviderOrSigner(true);
-      //create a new instance of the contract with a signer, wich allows update methods
+      //create a new instance of the contract with a signer, which allows update methods
       const whitelistContract = new Contract(
         NFT_CONTRACT_ADDRESS,
         abi,
@@ -75,7 +74,7 @@ export default function Home() {
     }
   };
 
-  //connectWallet connectss the MetaMask wallet
+  //connectWallet connects the MetaMask wallet
   const connectWallet = async () => {
     try {
       //get the provider from web3Modal, which in our case is MetaMask.
@@ -92,7 +91,7 @@ export default function Home() {
     try{
       //we need a signer here since this is a 'write' transaction
       const signer = await getProviderOrSigner(true);
-      //create a new instance of the contract with a signer, wich allows update methods
+      //create a new instance of the contract with a signer, which allows update methods
       const whitelistContract = new Contract(
         NFT_CONTRACT_ADDRESS,
         abi,
@@ -174,7 +173,9 @@ export default function Home() {
       const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
       //call the owner function from the contract
       const _owner = await nftContract.owner();
-      //we will get the signer no to extract the address of the currently connected MetaMask account
+      //we will get the signer now to extract the address of the currently connected MetaMask account
+      const signer = await getProviderOrSigner(true);
+      //get the address associated to the signer which is connected to  MetaMask
       const address = await signer.getAddress();
       if (address.toLowerCase() === _owner.toLowerCase()) {
         setIsOwner(true);
@@ -262,6 +263,10 @@ export default function Home() {
             clearInterval(presaleEndedInterval);
           }
         }
+      }, 5 * 1000);
+      // set an interval to get the number of token Ids minted every 5 seconds
+      setInterval(async function () {
+        await getTokenIdsMinted();
       }, 5 * 1000);
     }
   }, [walletConnected]);
