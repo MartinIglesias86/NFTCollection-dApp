@@ -297,7 +297,7 @@ export default function Home() {
     if (!presaleStarted) {
       return (
         <div>
-          <div className={styles.description}>La pre-venta no a comenzado</div>
+          <div className={styles.description}>⌛ La pre-venta no comienza aun ⌛</div>
         </div>
       );
     }
