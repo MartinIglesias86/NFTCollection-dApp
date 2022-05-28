@@ -11,3 +11,10 @@ the Rinkeby test net.
 📋 Smart contract deployed in [Rinkeby Testnet Network](https://rinkeby.etherscan.io/address/0xdAEC3cDE06f598C825886A3E27AE2c525f18e9AD)
 
 💻 App deployed [Here](https://nft-collection-d-app-martiniglesias86.vercel.app/)
+
+## Requirements
+* There should only exist 20 Crypto Dev NFT's and each one of them should be unique.
+* User's should be able to mint only 1 NFT with one transaction.
+* Whitelisted users, should have a 5 min presale period before the actual sale where they are guaranteed 1 NFT per transaction.
+* There should be a website for your NFT Collection.<br><br>
+### Lets start building 🚀
